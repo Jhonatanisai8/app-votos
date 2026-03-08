@@ -1,9 +1,129 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  createTheme,
+  CssBaseline,
+  Grid,
+  TextField,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
+const defaultTheme = createTheme();
 const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+  const [formularioDatos, setFormularioDatos] = useState({
+    email: "",
+    password: "",
+  });
 
-export default Login
+  const [cargando, setCargando] = useState(false);
+  const navigate = useNavigate();
+  const manejarCambioDeEntrada = async (event) => {
+    const { name, value } = event.target;
+    setFormularioDatos({
+      ...formularioDatos,
+      [name]: value,
+    });
+  };
+  const manejarEnvio = async (event) => {
+    event.preventDefault();
+    setCargando(true);
+    console.log(formularioDatos);
+    setCargando(false);
+  };
+  return (
+    <div>
+      <ThemeProvider theme={defaultTheme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar
+              sx={{
+                m: 1,
+                bgcolor: "primary.main",
+              }}
+            >
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign In
+            </Typography>
+          </Box>
+          <Box
+            component="form"
+            onSubmit={manejarEnvio}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={formularioDatos.email}
+              onChange={manejarCambioDeEntrada}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="Password"
+              name="password"
+              autoComplete="password"
+              autoFocus
+              value={formularioDatos.password}
+              onChange={manejarCambioDeEntrada}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={!formularioDatos.email || !formularioDatos.password}
+            >
+              {cargando ? (
+                <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+              ) : (
+                "Iniciar Sesión"
+              )}
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link variant="body2" onClick={() => navigate("/register")}>
+                  {"¿No tienes una cuenta? Regístrate"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Container>
+      </ThemeProvider>
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={cargando}
+      >
+        <CircularProgress color="success" />
+      </Backdrop>
+    </div>
+  );
+};
+
+export default Login;
