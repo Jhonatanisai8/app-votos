@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as MuiLink } from "@mui/material";
+import { Link, Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Backdrop,
@@ -39,7 +40,7 @@ const Login = () => {
     setCargando(false);
   };
   return (
-    <div>
+    <>
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -60,7 +61,7 @@ const Login = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign In
+              Iniciar Sesión
             </Typography>
           </Box>
           <Box
@@ -108,9 +109,9 @@ const Login = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link variant="body2" onClick={() => navigate("/register")}>
+                <MuiLink variant="body2" onClick={() => navigate("/register")}>
                   {"¿No tienes una cuenta? Regístrate"}
-                </Link>
+                </MuiLink>
               </Grid>
             </Grid>
           </Box>
@@ -122,7 +123,7 @@ const Login = () => {
       >
         <CircularProgress color="success" />
       </Backdrop>
-    </div>
+    </>
   );
 };
 
