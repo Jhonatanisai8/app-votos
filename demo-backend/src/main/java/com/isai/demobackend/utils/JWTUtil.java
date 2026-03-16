@@ -75,7 +75,7 @@ public class JWTUtil {
         .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
   }
 
-  private String generateToken(UserDetails userDetails, Long usuarioID) {
+  public String generateToken(UserDetails userDetails, Long usuarioID) {
     Map<String, Object> claims = new HashMap<>();
     claims.put("sub", userDetails.getUsername());
     claims.put("id", usuarioID);
