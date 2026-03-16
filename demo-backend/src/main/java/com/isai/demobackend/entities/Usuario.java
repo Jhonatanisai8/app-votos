@@ -1,5 +1,6 @@
 package com.isai.demobackend.entities;
 
+import com.isai.demobackend.dtos.UsuarioDTO;
 import com.isai.demobackend.enums.UsuarioRol;
 
 import jakarta.persistence.Entity;
@@ -26,6 +27,16 @@ public class Usuario implements UserDetails {
   private String nombres;
   private String apellidos;
   private UsuarioRol rol;
+
+  public UsuarioDTO getUsuarioDTO() {
+    UsuarioDTO usuarioDTO = new UsuarioDTO();
+    usuarioDTO.setId(id);
+    usuarioDTO.setEmail(email);
+    usuarioDTO.setNombres(nombres);
+    usuarioDTO.setApellidos(apellidos);
+    usuarioDTO.setUsuarioRol(rol);
+    return usuarioDTO;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

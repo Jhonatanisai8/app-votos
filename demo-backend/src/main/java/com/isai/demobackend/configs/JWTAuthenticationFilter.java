@@ -39,7 +39,7 @@ public class JWTAuthenticationFilter extends
       return;
     }
     jwt = authHeader.substring(7);
-    usuarioEmail = jwtUtil.extractUsername();
+    usuarioEmail = jwtUtil.extractUsername(jwt);
 
     if (StringUtils.isNoneEmpty(usuarioEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = usuarioService.userDetailsService().loadUserByUsername(usuarioEmail);

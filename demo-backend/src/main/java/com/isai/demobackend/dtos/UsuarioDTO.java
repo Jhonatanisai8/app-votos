@@ -1,5 +1,6 @@
 package com.isai.demobackend.dtos;
 
+import com.isai.demobackend.enums.UsuarioRol;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ public class UsuarioDTO {
   private String email;
   private String nombres;
   private String apellidos;
-  
+  private UsuarioRol usuarioRol;
 }
