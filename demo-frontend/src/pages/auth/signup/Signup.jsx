@@ -45,7 +45,7 @@ const Signup = () => {
       const response = await signup(formularioDatos);
       if (response.status === 200) {
         const responseData = response.data;
-        guardarToken(responseData.data);
+        guardarToken(responseData.jwtToken);
         navigate("/dashboard");
         enqueueSnackbar("Registro exitoso", {
           variant: "success",

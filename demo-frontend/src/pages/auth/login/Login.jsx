@@ -45,7 +45,7 @@ const Login = () => {
       const response = await login(formularioDatos);
       if (response.status === 200) {
         const responseData = response.data;
-        guardarToken(responseData.data);
+        guardarToken(responseData.jwtToken);
         navigate("/dashboard");
         enqueueSnackbar("Inicio de sesión exitoso", {
           variant: "success",

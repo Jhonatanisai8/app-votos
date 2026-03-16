@@ -57,11 +57,7 @@ const Header = () => {
                 <Button component={Link} to="/dashboard" color="inherit">
                   Dashboard
                 </Button>
-                <Button
-                  component={Link}
-                  to="/publicar-encuesta"
-                  color="inherit"
-                >
+                <Button component={Link} to="/encuesta/crear" color="inherit">
                   Publicar encuesta
                 </Button>
                 <Button component={Link} to="/mis-encuestas" color="inherit">
