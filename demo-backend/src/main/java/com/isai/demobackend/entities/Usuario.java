@@ -1,5 +1,7 @@
 package com.isai.demobackend.entities;
 
+import com.isai.demobackend.enums.UsuarioRol;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,4 +19,5 @@ public class Usuario {
   private String password;
   private String nombres;
   private String apellidos;
+  private UsuarioRol rol;
 }
