@@ -49,7 +49,7 @@ public class JWTUtil {
     return claimsResolver.apply(claims);
   }
 
-  private String extractUsername(String token) {
+  public String extractUsername(String token) {
     return extractClaims(token, Claims::getSubject);
   }
 
@@ -62,8 +62,8 @@ public class JWTUtil {
     return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
   }
 
-  private boolean isTokenExpired(String username) {
-    return extractExpiration(username).before(new Date());
+  private boolean isTokenExpired(String token) {
+    return extractExpiration(token).before(new Date());
   }
 
   private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
