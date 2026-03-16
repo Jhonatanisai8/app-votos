@@ -1,9 +1,5 @@
-import React from 'react'
-
-const common = () => {
-  return (
-    <div>common</div>
-  )
-}
-
-export default common
+import Cookies from "js-cookie";
+const TOKEN = "token";
+export const guardarToken = (token) => {
+  Cookies.set(TOKEN, token, { expires: 7 });
+};
