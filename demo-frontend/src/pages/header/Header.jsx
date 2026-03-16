@@ -64,8 +64,6 @@ const Header = () => {
                   Miss Encuestas
                 </Button>
                 <Button
-                  component={Link}
-                  to="/logout"
                   color="inherit"
                   onClick={manejarCerrarSesion}
                 >
