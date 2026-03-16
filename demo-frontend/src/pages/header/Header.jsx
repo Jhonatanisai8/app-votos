@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -8,8 +8,33 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { eliminarToken, esTokenValido } from "../../utility/common";
+
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [usurioIniciadoSesion, setUsurioIniciadoSesion] = useState(false);
+
+  const manejarCerrarSesion = () => {
+    navigate("/login");
+    eliminarToken();
+  };
+
+  useEffect(() => {
+    const estaLogueado = esTokenValido();
+    setUsurioIniciadoSesion(estaLogueado);
+  }, [location]);
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      if (!esTokenValido()) {
+        setUsurioIniciadoSesion(false);
+        manejarCerrarSesion();
+      }
+    }, 1800000);
+    return () => clearInterval(intervalo);
+  }, []);
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -27,12 +52,40 @@ const Header = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               App Votos
             </Typography>
-            <Button component={Link} to="/login" color="inherit">
-              Login
-            </Button>
-            <Button component={Link} to="/registro" color="inherit">
-              Registro
-            </Button>
+            {usurioIniciadoSesion ? (
+              <>
+                <Button component={Link} to="/dashboard" color="inherit">
+                  Dashboard
+                </Button>
+                <Button
+                  component={Link}
+                  to="/publicar-encuesta"
+                  color="inherit"
+                >
+                  Publicar encuesta
+                </Button>
+                <Button component={Link} to="/mis-encuestas" color="inherit">
+                  Miss Encuestas
+                </Button>
+                <Button
+                  component={Link}
+                  to="/logout"
+                  color="inherit"
+                  onClick={manejarCerrarSesion}
+                >
+                  Cerrar Sesión
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button component={Link} to="/login" color="inherit">
+                  Login
+                </Button>
+                <Button component={Link} to="/registro" color="inherit">
+                  Registro
+                </Button>
+              </>
+            )}
           </Toolbar>
         </AppBar>
       </Box>
