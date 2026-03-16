@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -26,6 +23,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173/")
 public class AuthController {
 
   private final AuthService authService;
@@ -84,12 +82,14 @@ public class AuthController {
         authenticationResponse.setUsername(usuario.getNombres() + " " + usuario.getApellidos());
         return ResponseEntity.status(HttpStatus.OK).body(authenticationResponse);
       }
-
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(Collections.singletonMap("error", "Usuario no encontrado"));
+    } catch (org.springframework.security.authentication.BadCredentialsException e) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(Collections.singletonMap("error", "Correo o contraseña incorrectos"));
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body(Collections.singletonMap("error", e.getMessage()));
+          .body(Collections.singletonMap("error","Error interno de servidor "+ e.getMessage()));
     }
   }
 }

@@ -1,9 +1,18 @@
-import React from 'react'
+import axiosInstance from "../../environment/axiosInstance";
+export const signup = async (signupRequest) => {
+  try {
+    const response = await axiosInstance.post("api/auth/signup", signupRequest);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const auth = () => {
-  return (
-    <div>auth</div>
-  )
-}
-
-export default auth
+export const login = async (loginRequest) => {
+  try {
+    const response = await axiosInstance.post("api/auth/login", loginRequest);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

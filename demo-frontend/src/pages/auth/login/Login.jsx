@@ -17,9 +17,13 @@ import {
   Typography,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { login } from "../../../services/auth/auth";
+import { useSnackbar } from "notistack";
+import { guardarToken } from "../../../utility/common";
 
 const defaultTheme = createTheme();
 const Login = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [formularioDatos, setFormularioDatos] = useState({
     email: "",
     password: "",
@@ -37,8 +41,25 @@ const Login = () => {
   const manejarEnvio = async (event) => {
     event.preventDefault();
     setCargando(true);
-    console.log(formularioDatos);
-    setCargando(false);
+    try {
+      const response = await login(formularioDatos);
+      if (response.status === 200) {
+        const responseData = response.data;
+        guardarToken(responseData.data);
+        navigate("/dashboard");
+        enqueueSnackbar("Inicio de sesión exitoso", {
+          variant: "success",
+          autoHideDuration: 5000,
+        });
+      }
+    } catch (error) {
+      enqueueSnackbar("Correo o contraseña incorrectos", {
+        variant: "error",
+        autoHideDuration: 5000,
+      });
+    } finally {
+      setCargando(false);
+    }
   };
   return (
     <>
